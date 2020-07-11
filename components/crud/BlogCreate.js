@@ -58,13 +58,14 @@ const CreateBlog = ({ router }) => {
 		success: '',
 		formData: '',
 		title: '',
+		loading: false,
 		hidePublishButton: false,
 	});
 	const [checkedCat, setCheckedCat] = useState([]);
 	const [checkedTag, setCheckedTag] = useState([]);
 	const token = getCookie('token');
 
-	const { error, sizeError, success, formData, title, hidePublishButton } = values;
+	const { error, sizeError, success, formData, title, hidePublishButton, loading } = values;
 
 	useEffect(() => {
 		setValues({ ...values, formData: new FormData() });
@@ -75,16 +76,23 @@ const CreateBlog = ({ router }) => {
 	const publishBlog = (e) => {
 		e.preventDefault();
 
+		setValues({ ...values, loading: true });
+
 		createBlog(formData, token)
 			.then((data) => {
 				if (data.error) {
-					setValues({ ...values, error: data.error });
+					setValues({
+						...values,
+						error: data.error.length === 0 ? 'Some error occured.' : data.error,
+						loading: false,
+					});
 				} else {
 					setValues({
 						...values,
 						title: '',
 						error: '',
 						success: `A new blog called "${data.title} has been published"`,
+						loading: false,
 					});
 					setBody('');
 					setCategories([]);
@@ -101,7 +109,7 @@ const CreateBlog = ({ router }) => {
 		// console.log(e.target.value);
 		const value = name === 'photo' ? e.target.files[0] : e.target.value;
 		formData.set(name, value);
-		setValues({ ...values, [name]: value, error: '', formData });
+		setValues({ ...values, [name]: value, error: '', formData, success: '' });
 	};
 	const handleBody = (e) => {
 		setBody(e);
@@ -179,12 +187,21 @@ const CreateBlog = ({ router }) => {
 		);
 	};
 
+	const showLoading = () => {
+		return (
+			<div className="alert alert-info py-3 my-3" style={{ display: loading ? '' : 'none' }}>
+				Please wait while the submitted blog data is checked. The blog will get created if everthing went fine.
+			</div>
+		);
+	};
+
 	return (
 		<div className="container-fluid pb-5">
 			<div className="row">
 				<div className="col-md-8 mb-5">
 					{showError()}
 					{showSuccess()}
+					{showLoading()}
 					<form onSubmit={publishBlog}>
 						<div className="form-group">
 							<label className="text-muted" htmlFor="title">
