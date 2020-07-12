@@ -42,7 +42,7 @@ const BlogRead = () => {
 			if (data.error) {
 				console.log(data.error);
 				setLoading(false);
-				setErrors('There occurred an error in deleteing the blog. Please try again later ');
+				setErrors('There occurred an error in deleting the blog. Please try again later ');
 			} else {
 				setMessage(data.message);
 				setLoading(false);

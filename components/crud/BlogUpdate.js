@@ -23,6 +23,7 @@ const BlogUpdate = ({ router }) => {
 		title: '',
 	});
 	const { error, success, formData, title } = values;
+	const token = getCookie('token');
 
 	useEffect(() => {
 		setValues({ ...values, formData: new FormData() });
@@ -93,6 +94,14 @@ const BlogUpdate = ({ router }) => {
 			.catch((err) => {
 				setValues({ ...values, error: 'An unknown error occured' });
 			});
+	};
+
+	const showError = () => {
+		return (
+			<div className="alert alert-danger" style={{ display: error.length > 0 ? '' : 'none' }}>
+				{error}
+			</div>
+		);
 	};
 
 	const showCategories = () => {
@@ -188,8 +197,27 @@ const BlogUpdate = ({ router }) => {
 		setValues({ ...values, [name]: value, error: '', formData, success: '' });
 	};
 
-	const editBlog = () => {
-		console.log(`update blog`);
+	const editBlog = (e) => {
+		e.preventDefault();
+		updateBlog(formData, token, router.query.slug)
+			.then((data) => {
+				if (data.error) {
+					setValues({ ...values, error: data.error });
+				} else {
+					setValues({
+						...values,
+						sucess: `Blog titled "${data.title}" has been updated successfully`,
+					});
+					if (isAuth() && isAuth().role === 1) {
+						Router.replace(`/admin`);
+					} else if (isAuth() && isAuth().role === 0) {
+						Router.replace(`/user`);
+					}
+				}
+			})
+			.catch((err) => {
+				setValues({ ...values, error: err });
+			});
 	};
 
 	const updateBlogForm = () => {
@@ -230,13 +258,11 @@ const BlogUpdate = ({ router }) => {
 		<div className="container-fluid pb-5">
 			<div className="row">
 				<div className="col-md-8 mb-5">
-					{updateBlogForm()}
-					<div className="pt-3">
-						show success and error msg
+					<div className="pb-3">
+						{showError()}
 						<hr />
-						{JSON.stringify(categories)}
-						{JSON.stringify(tags)}
 					</div>
+					{updateBlogForm()}
 				</div>
 				<div className="col-md-4">
 					<div className="form-group pb-2">
