@@ -1,14 +1,55 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import Layout from '../../components/Layout';
 import renderHTML from 'react-render-html';
 import moment from 'moment';
-import { singleBlog } from '../../actions/blog';
+import { singleBlog, listRelated } from '../../actions/blog';
 import { API, APP_NAME, DOMAIN, FB_APP_ID } from '../../config';
 import LazyLoad from 'react-lazy-load';
+import { Alert } from 'reactstrap';
+import SmallCard from '../../components/blog/SmallCard';
 
 const SingleBlog = ({ blog, query }) => {
+	const [errors, setErrors] = useState(false);
+	const [related, setRelated] = useState([]);
+	const loadRelated = () => {
+		listRelated({ _id: blog._id, categories: blog.categories })
+			.then((data) => {
+				if (data.error) {
+					setErrors(data.error);
+				} else {
+					// console.log(data);
+					setRelated(data);
+				}
+			})
+			.catch((err) => {
+				console.log(err);
+				setErrors('There was a problem in loading the related blogs');
+			});
+	};
+	useEffect(() => {
+		loadRelated();
+	}, []);
+
+	const onDismissError = () => {
+		setErrors(false);
+	};
+
+	const showErrors = () => {
+		let w;
+		if (errors) {
+			w = errors.length > 0;
+		} else {
+			w = false;
+		}
+		return (
+			<Alert color="danger" isOpen={w} toggle={onDismissError} fade={true}>
+				{errors}
+			</Alert>
+		);
+	};
+
 	const head = () => {
 		return (
 			<Head>
@@ -49,6 +90,21 @@ const SingleBlog = ({ blog, query }) => {
 			);
 		});
 	};
+
+	const showRelatedBlogs = () => {
+		if (related.length > 0) {
+			return related.map((blog) => {
+				return (
+					<div className="col-md-4" key={blog._id}>
+						<article>
+							<SmallCard blog={blog} />
+						</article>
+					</div>
+				);
+			});
+		}
+	};
+
 	return (
 		<React.Fragment>
 			{head()}
@@ -89,7 +145,8 @@ const SingleBlog = ({ blog, query }) => {
 						<div className="container pb-5">
 							<h4 className="text-center py-5 h2">Related blogs</h4>
 							<hr />
-							<p>Show related blogs</p>
+							{errors && showErrors()}
+							{showRelatedBlogs()}
 						</div>
 						<div className="container pb-5">
 							<p>Show comments</p>
