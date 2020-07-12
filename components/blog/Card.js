@@ -50,7 +50,6 @@ const Card = ({ blog }) => {
 							style={{ maxHeight: '300px', width: '100%' }}
 							src={`${API}/blog/photo/${blog.slug}`}
 							alt={blog.title}
-							loading="lazy"
 						/>
 					</section>
 				</div>

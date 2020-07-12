@@ -137,7 +137,7 @@ const Blogs = ({ blogs, categories, tags, totalBlogs, blogSkip, blogsLimit, rout
 								</h1>
 							</div>
 							<section>
-								<div className="pb-5 justify">
+								<div className="pb-5 text-center">
 									{showAllCategories()}
 									<br />
 									{showAllTags()}
