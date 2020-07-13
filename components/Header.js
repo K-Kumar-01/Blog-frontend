@@ -6,6 +6,7 @@ import { isAuth, signout } from '../actions/auth';
 import Router from 'next/router';
 import NProgress from 'nprogress';
 import styles from './navlinks.module.css';
+import Search from './blog/Search';
 
 NProgress.configure({ showSpinner: false });
 Router.onRouteChangeStart = (url) => NProgress.start();
@@ -18,7 +19,7 @@ const Header = (props) => {
 	const toggle = () => setIsOpen(!isOpen);
 
 	return (
-		<div>
+		<React.Fragment>
 			<Navbar color="light" light expand="md">
 				<Link href="/">
 					<NavLink className={`${styles.link} font-weight-bold`}>{APP_NAME}</NavLink>
@@ -67,7 +68,8 @@ const Header = (props) => {
 					</Nav>
 				</Collapse>
 			</Navbar>
-		</div>
+			<Search />
+		</React.Fragment>
 	);
 };
 
