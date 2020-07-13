@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { create, getTags, removeTag, singleTag } from '../../actions/tag';
+import { create, getTags, removeTag } from '../../actions/tag';
 import Router from 'next/router';
 import { isAuth, getCookie } from '../../actions/auth';
 import { Alert } from 'reactstrap';
