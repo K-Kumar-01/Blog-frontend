@@ -9,6 +9,7 @@ import { API, APP_NAME, DOMAIN, FB_APP_ID } from '../../config';
 import LazyLoad from 'react-lazy-load';
 import { Alert } from 'reactstrap';
 import SmallCard from '../../components/blog/SmallCard';
+import DisqusThread from '../../components/DisqusThread';
 
 const SingleBlog = ({ blog, query }) => {
 	const [errors, setErrors] = useState(false);
@@ -105,6 +106,14 @@ const SingleBlog = ({ blog, query }) => {
 		}
 	};
 
+	const showComments = () => {
+		return (
+			<div>
+				<DisqusThread id={blog._id} title={blog.title} path={`/blog/${blog.slug}`} />
+			</div>
+		);
+	};
+
 	return (
 		<React.Fragment>
 			{head()}
@@ -152,9 +161,7 @@ const SingleBlog = ({ blog, query }) => {
 							{errors && showErrors()}
 							{showRelatedBlogs()}
 						</div>
-						<div className="container pb-5">
-							<p>Show comments</p>
-						</div>
+						<div className="container pb-5">{showComments()}</div>
 					</article>
 				</main>
 			</Layout>
