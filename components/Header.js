@@ -32,6 +32,11 @@ const Header = (props) => {
 								<NavLink className={styles.link}>Blogs</NavLink>
 							</Link>
 						</NavItem>
+						<NavItem>
+							<Link href="/contact">
+								<NavLink className={`${styles.link}`}>Contact</NavLink>
+							</Link>
+						</NavItem>
 						{!isAuth() && (
 							<React.Fragment>
 								<NavItem>
@@ -47,12 +52,6 @@ const Header = (props) => {
 							</React.Fragment>
 						)}
 
-						<NavItem>
-							<Link href="user/crud/blog">
-								<NavLink className={`${styles.link} btn btn-primary text-light`}>Write a blog</NavLink>
-							</Link>
-						</NavItem>
-
 						{isAuth() && (
 							<NavItem>
 								<Link href={isAuth().role === 1 ? '/admin' : '/user'}>
@@ -60,6 +59,12 @@ const Header = (props) => {
 								</Link>
 							</NavItem>
 						)}
+
+						<NavItem>
+							<Link href="user/crud/blog">
+								<NavLink className={`${styles.link} btn btn-primary text-light mr-2`}>Write a blog</NavLink>
+							</Link>
+						</NavItem>
 
 						{isAuth() && (
 							<NavItem>
