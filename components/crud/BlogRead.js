@@ -5,7 +5,7 @@ import { getCookie, isAuth } from '../../actions/auth';
 import { list, removeBlog } from '../../actions/blog';
 import moment from 'moment';
 
-const BlogRead = () => {
+const BlogRead = ({ username }) => {
 	const [blogs, setBlogs] = useState([]);
 	const [message, setMessage] = useState('');
 	const [loading, setLoading] = useState(false);
@@ -13,7 +13,7 @@ const BlogRead = () => {
 	const token = getCookie('token');
 
 	const loadBlogs = () => {
-		list()
+		list(username)
 			.then((data) => {
 				if (data.error) {
 					console.log(data.error);
@@ -96,7 +96,11 @@ const BlogRead = () => {
 				<div key={blog._id} className="mt-2 pb-2">
 					<h3>{blog.title}</h3>
 					<p className="mark">
-						Written by {blog.postedBy.name} | Published on {moment(blog.updatedAt).fromNow()}
+						Written by{' '}
+						<Link href={`/profile/${blog.postedBy.username}`}>
+							<a>{blog.postedBy.username}</a>
+						</Link>{' '}
+						| Published on {moment(blog.updatedAt).fromNow()}
 					</p>
 					<button
 						className="btn btn-sm btn-danger text-uppercase mr-3"

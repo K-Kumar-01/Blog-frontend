@@ -47,6 +47,12 @@ const Header = (props) => {
 							</React.Fragment>
 						)}
 
+						<NavItem>
+							<Link href="user/crud/blog">
+								<NavLink className={`${styles.link} btn btn-primary text-light`}>Write a blog</NavLink>
+							</Link>
+						</NavItem>
+
 						{isAuth() && (
 							<NavItem>
 								<Link href={isAuth().role === 1 ? '/admin' : '/user'}>
@@ -58,7 +64,7 @@ const Header = (props) => {
 						{isAuth() && (
 							<NavItem>
 								<NavLink
-									className={styles.link}
+									className={`styles.link btn btn-dark text-light`}
 									onClick={() => signout(() => Router.replace(`/signin`))}
 								>
 									Signout
