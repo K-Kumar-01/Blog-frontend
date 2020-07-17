@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { signin, authenticate, isAuth } from '../../actions/auth.js';
 import Router from 'next/router';
+import Link from 'next/link';
 
 const SigninComponent = () => {
 	const [values, setValues] = useState({
@@ -92,6 +93,10 @@ const SigninComponent = () => {
 					</div>
 				</form>
 			)}
+			<hr />
+			<Link href="/auth/password/forgot">
+				<a className="btn btn-sm btn-outline-warning">Forgot Password</a>
+			</Link>
 		</React.Fragment>
 	);
 };

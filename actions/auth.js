@@ -31,7 +31,6 @@ export const signup = (user) => {
 			return response.json();
 		})
 		.catch((err) => {
-			console.log(`${API}/signup`);
 			console.log(err);
 		});
 };
@@ -49,7 +48,6 @@ export const signin = (user) => {
 			return response.json();
 		})
 		.catch((err) => {
-			console.log(`${API}/signup`);
 			console.log(err);
 		});
 };
@@ -128,4 +126,38 @@ export const updateUser = (user, next) => {
 			next();
 		}
 	}
+};
+
+export const forgotPassword = (email) => {
+	return fetch(`${API}/forgot-password`, {
+		method: 'PUT',
+		headers: {
+			'Content-Type': 'application/json',
+			Accept: 'application/json',
+		},
+		body: JSON.stringify(email),
+	})
+		.then((response) => {
+			return response.json();
+		})
+		.catch((err) => {
+			console.log(err);
+		});
+};
+
+export const resetPassword = (resetInfo) => {
+	return fetch(`${API}/reset-password`, {
+		method: 'PUT',
+		headers: {
+			'Content-Type': 'application/json',
+			Accept: 'application/json',
+		},
+		body: JSON.stringify(resetInfo),
+	})
+		.then((response) => {
+			return response.json();
+		})
+		.catch((err) => {
+			console.log(err);
+		});
 };

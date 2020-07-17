@@ -19,7 +19,7 @@ const ContactForm = ({ authorEmail }) => {
 		e.preventDefault();
 		setValues({ ...values, buttonText: 'Sending...' });
 
-		emailContactForm({ authorEmail,name, email, message })
+		emailContactForm({ authorEmail, name, email, message })
 			.then((data) => {
 				if (data.error) {
 					setValues({ ...values, error: data.error, buttonText: 'Send Message' });
@@ -31,6 +31,7 @@ const ContactForm = ({ authorEmail }) => {
 						name: '',
 						email: '',
 						message: '',
+						error: false,
 						buttonText: 'Sent',
 					});
 				}
