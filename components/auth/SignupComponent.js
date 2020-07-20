@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { signup, isAuth } from '../../actions/auth.js';
-import Router  from 'next/router';
+import { isAuth, preSignup } from '../../actions/auth.js';
+import Router from 'next/router';
 
 const SignupComponent = () => {
 	const [values, setValues] = useState({
@@ -22,8 +22,8 @@ const SignupComponent = () => {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		const user = { name, email, password };
-		setValues({ ...values, loading: true });
-		signup(user).then((data) => {
+		setValues({ ...values, loading: true, error: '', message: false });
+		preSignup(user).then((data) => {
 			if (data.error) {
 				setValues({ ...values, error: data.error, loading: false });
 			} else {
@@ -48,7 +48,7 @@ const SignupComponent = () => {
 		return error ? <div className="alert alert-danger">{error}</div> : '';
 	};
 	const showMessage = () => {
-		return message.length > 0 ? <div className="alert alert-success">{message}</div> : '';
+		return message.length > 0 ? <div className="alert alert-info">{message}</div> : '';
 	};
 
 	const handleChange = (name) => (e) => {
