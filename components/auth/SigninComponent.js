@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { signin, authenticate, isAuth } from '../../actions/auth.js';
 import Router from 'next/router';
 import Link from 'next/link';
-
+import LoginGoogle from './LoginGoogle.js';
 const SigninComponent = () => {
 	const [values, setValues] = useState({
 		email: '',
@@ -58,6 +58,7 @@ const SigninComponent = () => {
 			{showError()}
 			{showLoading()}
 			{showMessage()}
+			<LoginGoogle />
 			{showForm && (
 				<form onSubmit={handleSubmit}>
 					<label htmlFor="email" className="font-weight-bold">
