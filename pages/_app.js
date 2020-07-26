@@ -1,5 +1,6 @@
 import 'nprogress/nprogress.css';
 import '../styles/global.css';
+import '../styles/styles.css';
 import 'react-quill/dist/quill.snow.css';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 
