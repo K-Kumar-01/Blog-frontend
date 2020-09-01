@@ -21,3 +21,6 @@ module.exports = {
 ```
 4. Run `yarn dev`. 
 5. The program will be running on port 3000 
+
+# Note
+This project requires backend which is available [here](https://github.com/K-Kumar-01/Blogging-backend)
